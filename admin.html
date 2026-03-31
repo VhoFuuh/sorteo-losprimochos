@@ -19,7 +19,7 @@
     .login-box h1 { font-size: 20px; margin-bottom: 6px; }
     .login-box p  { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
 
-    #page-app { display: none; padding: 24px; max-width: 960px; margin: 0 auto; }
+    #page-app { display: none; padding: 24px; max-width: 1000px; margin: 0 auto; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
     .header h1 { font-size: 20px; }
 
@@ -34,11 +34,11 @@
     .card-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
     .card-value { font-size: 26px; font-weight: 700; }
 
-    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; overflow-x: auto; }
     .table-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
     .table-header h3 { font-size: 15px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { text-align: left; padding: 10px 16px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 500; }
+    th { text-align: left; padding: 10px 16px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 500; white-space: nowrap; }
     td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     tr:last-child td { border: none; }
     tr:hover td { background: var(--surface2); }
@@ -61,8 +61,8 @@
     .btn-primary:hover { opacity: .9; }
     .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .btn-ghost:hover { background: var(--border); }
-    .btn-danger { background: rgba(239,68,68,.15); color: var(--danger); border: 1px solid rgba(239,68,68,.3); }
-    .btn-danger:hover { background: rgba(239,68,68,.3); }
+    .btn-danger  { background: rgba(239,68,68,.15); color: var(--danger); border: 1px solid rgba(239,68,68,.3); }
+    .btn-danger:hover  { background: rgba(239,68,68,.3); }
     .btn-warning { background: rgba(245,158,11,.15); color: var(--warning); border: 1px solid rgba(245,158,11,.3); }
     .btn-warning:hover { background: rgba(245,158,11,.3); }
     .btn-lg { padding: 14px 32px; font-size: 16px; }
@@ -74,7 +74,7 @@
     .vetado-form { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
     .vetado-form h3 { font-size: 15px; margin-bottom: 16px; }
     .inline-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
-    .inline-form .form-group { margin: 0; flex: 1; min-width: 160px; }
+    .inline-form .form-group { margin: 0; flex: 1; min-width: 140px; }
 
     @keyframes ruleta { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     .sorteando { animation: ruleta .3s ease infinite; }
@@ -122,9 +122,11 @@
         <button class="btn btn-ghost" onclick="cargarDatos()">🔄 Actualizar</button>
       </div>
       <table>
-        <thead><tr><th>#</th><th>Código</th><th>Nombre</th><th>Teléfono</th><th>Registrado</th><th>Acciones</th></tr></thead>
+        <thead>
+          <tr><th>#</th><th>Código</th><th>Nombre</th><th>RUT</th><th>Teléfono</th><th>Registrado</th><th>Acciones</th></tr>
+        </thead>
         <tbody id="tabla-participantes">
-          <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
+          <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
         </tbody>
       </table>
     </div>
@@ -138,6 +140,7 @@
       <div class="ganador-card" id="ganador-card">
         <div class="icono">🏆</div>
         <h2 id="ganador-nombre">—</h2>
+        <p id="ganador-rut">—</p>
         <p id="ganador-codigo">—</p>
         <p id="ganador-telefono" style="margin-top:6px;font-size:15px;color:var(--text);">—</p>
       </div>
@@ -154,7 +157,11 @@
       <h3>🚫 Agregar persona vetada</h3>
       <div class="inline-form">
         <div class="form-group">
-          <label>Teléfono</label>
+          <label>RUT</label>
+          <input type="text" id="veto-rut" placeholder="12.345.678-9" oninput="formatearRut(this)" />
+        </div>
+        <div class="form-group">
+          <label>Teléfono (opcional)</label>
           <input type="text" id="veto-telefono" placeholder="+56912345678" />
         </div>
         <div class="form-group">
@@ -171,9 +178,9 @@
         <button class="btn btn-ghost" onclick="cargarVetados()">🔄 Actualizar</button>
       </div>
       <table>
-        <thead><tr><th>Teléfono</th><th>Motivo</th><th>Agregado</th><th>Acción</th></tr></thead>
+        <thead><tr><th>RUT</th><th>Teléfono</th><th>Motivo</th><th>Agregado</th><th>Acción</th></tr></thead>
         <tbody id="tabla-vetados">
-          <tr><td colspan="4" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
+          <tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
         </tbody>
       </table>
     </div>
@@ -184,6 +191,17 @@
   const SUPABASE_URL = 'https://hapdvdzxxibnbgfezhvu.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhcGR2ZHp4eGlibmJnZmV6aHZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTc5OTEsImV4cCI6MjA5MDQ5Mzk5MX0.BWWUDKTmpRNZQfK5bbRFDTCF7JJE2msvsnJs4jIgAPM';
   const ADMIN_PASSWORD = 'primochos2026';
+
+  function formatearRut(input) {
+    let val = input.value.replace(/[^0-9kK]/g, '').toUpperCase();
+    if (val.length > 9) val = val.slice(0, 9);
+    if (val.length > 1) {
+      const cuerpo = val.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      input.value = `${cuerpo}-${val.slice(-1)}`;
+    } else {
+      input.value = val;
+    }
+  }
 
   function doLogin() {
     const pass = document.getElementById('login-pass').value;
@@ -244,7 +262,7 @@
 
     const tbody = document.getElementById('tabla-participantes');
     if (!participantes.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);">Sin participantes aún</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted);">Sin participantes aún</td></tr>';
       return;
     }
     tbody.innerHTML = participantes.map((p, i) => `
@@ -252,11 +270,12 @@
         <td style="color:var(--muted)">${i + 1}</td>
         <td><span class="badge-green">${p.codigo}</span></td>
         <td style="font-weight:600">${p.nombre}</td>
+        <td style="color:var(--muted)">${p.rut || '—'}</td>
         <td>${p.telefono}</td>
-        <td style="color:var(--muted);font-size:12px">${new Date(p.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
+        <td style="color:var(--muted);font-size:12px;white-space:nowrap">${new Date(p.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
         <td style="display:flex;gap:6px;flex-wrap:wrap;">
           <button class="btn btn-danger" style="padding:4px 10px;font-size:12px;" onclick="eliminarParticipante('${p.codigo}','${p.nombre}')">🗑 Eliminar</button>
-          <button class="btn btn-warning" style="padding:4px 10px;font-size:12px;" onclick="vetarDesdeParticipante('${p.telefono}','${p.nombre}')">🚫 Vetar</button>
+          <button class="btn btn-warning" style="padding:4px 10px;font-size:12px;" onclick="vetarDesdeParticipante('${p.rut || ''}','${p.telefono}','${p.nombre}')">🚫 Vetar</button>
         </td>
       </tr>
     `).join('');
@@ -268,13 +287,23 @@
     await cargarDatos();
   }
 
-  async function vetarDesdeParticipante(telefono, nombre) {
-    if (!confirm(`¿Vetar a ${nombre} (${telefono})?\nSe eliminará del sorteo y no podrá registrarse de nuevo.`)) return;
+  async function vetarDesdeParticipante(rut, telefono, nombre) {
+    if (!confirm(`¿Vetar a ${nombre}?\nRUT: ${rut}\nTeléfono: ${telefono}\n\nSe eliminará del sorteo y no podrá registrarse de nuevo.`)) return;
     const motivo = prompt('Motivo (opcional):') || '';
-    await supaInsert('vetados', { telefono, motivo });
-    await supaDelete('participantes', 'telefono', telefono);
+    const datos = { motivo };
+    if (rut)      datos.rut      = rut;
+    if (telefono) datos.telefono = telefono;
+    await supaInsert('vetados', datos);
+    await supaDelete('participantes', 'codigo', await getCodigoByRut(rut, telefono));
     await cargarDatos();
     await cargarVetados();
+  }
+
+  async function getCodigoByRut(rut, telefono) {
+    const res = await supaFetch('participantes', `rut=eq.${encodeURIComponent(rut)}&select=codigo`);
+    if (res.length) return res[0].codigo;
+    const res2 = await supaFetch('participantes', `telefono=eq.${encodeURIComponent(telefono)}&select=codigo`);
+    return res2.length ? res2[0].codigo : '';
   }
 
   async function realizarSorteo() {
@@ -293,6 +322,7 @@
     const intervalo = setInterval(() => {
       const temp = participantes[Math.floor(Math.random() * participantes.length)];
       document.getElementById('ganador-nombre').textContent   = temp.nombre;
+      document.getElementById('ganador-rut').textContent      = temp.rut || '';
       document.getElementById('ganador-codigo').textContent   = temp.codigo;
       document.getElementById('ganador-telefono').textContent = temp.telefono;
     }, 100);
@@ -300,10 +330,11 @@
     setTimeout(() => {
       clearInterval(intervalo);
       card.classList.remove('sorteando');
-      const ganador = participantes[Math.floor(Math.random() * participantes.length)];
-      document.getElementById('ganador-nombre').textContent   = ganador.nombre;
-      document.getElementById('ganador-codigo').textContent   = `Código: ${ganador.codigo}`;
-      document.getElementById('ganador-telefono').textContent = `📞 ${ganador.telefono}`;
+      const g = participantes[Math.floor(Math.random() * participantes.length)];
+      document.getElementById('ganador-nombre').textContent   = g.nombre;
+      document.getElementById('ganador-rut').textContent      = `RUT: ${g.rut || '—'}`;
+      document.getElementById('ganador-codigo').textContent   = `Código: ${g.codigo}`;
+      document.getElementById('ganador-telefono').textContent = `📞 ${g.telefono}`;
       btn.style.display = 'none';
       document.getElementById('btn-nuevo-sorteo').style.display = 'inline-block';
     }, 3000);
@@ -321,28 +352,38 @@
     const vetados = await supaFetch('vetados', 'select=*&order=creado_en.desc');
     const tbody = document.getElementById('tabla-vetados');
     if (!vetados.length) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--muted);">Sin vetados</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);">Sin vetados</td></tr>';
       return;
     }
     tbody.innerHTML = vetados.map(v => `
       <tr>
-        <td><span class="badge-red">${v.telefono}</span></td>
+        <td><span class="badge-red">${v.rut || '—'}</span></td>
+        <td style="color:var(--muted)">${v.telefono || '—'}</td>
         <td style="color:var(--muted)">${v.motivo || '—'}</td>
-        <td style="color:var(--muted);font-size:12px">${new Date(v.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
-        <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="eliminarVetado(${v.id},'${v.telefono}')">✕ Quitar veto</button></td>
+        <td style="color:var(--muted);font-size:12px;white-space:nowrap">${new Date(v.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
+        <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="eliminarVetado(${v.id},'${v.rut || v.telefono}')">✕ Quitar veto</button></td>
       </tr>
     `).join('');
   }
 
   async function agregarVetado() {
+    const rut      = document.getElementById('veto-rut').value.trim();
     const telefono = document.getElementById('veto-telefono').value.trim();
     const motivo   = document.getElementById('veto-motivo').value.trim();
     const msg      = document.getElementById('veto-msg');
-    if (!telefono) { msg.style.color = 'var(--danger)'; msg.textContent = 'El teléfono es obligatorio'; return; }
-    const res = await supaInsert('vetados', { telefono, motivo });
+
+    if (!rut && !telefono) {
+      msg.style.color = 'var(--danger)'; msg.textContent = 'Ingresa al menos RUT o teléfono'; return;
+    }
+    const datos = { motivo };
+    if (rut)      datos.rut      = rut;
+    if (telefono) datos.telefono = telefono;
+
+    const res = await supaInsert('vetados', datos);
     if (res.ok || res.status === 201) {
       msg.style.color = 'var(--success)';
-      msg.textContent = `✓ ${telefono} vetado correctamente`;
+      msg.textContent = `✓ Vetado correctamente`;
+      document.getElementById('veto-rut').value      = '';
       document.getElementById('veto-telefono').value = '';
       document.getElementById('veto-motivo').value   = '';
       await cargarVetados();
@@ -353,8 +394,8 @@
     setTimeout(() => { msg.textContent = ''; }, 3000);
   }
 
-  async function eliminarVetado(id, telefono) {
-    if (!confirm(`¿Quitar el veto de ${telefono}?`)) return;
+  async function eliminarVetado(id, identificador) {
+    if (!confirm(`¿Quitar el veto de ${identificador}?`)) return;
     await supaDelete('vetados', 'id', id);
     await cargarVetados();
   }
