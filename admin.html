@@ -437,7 +437,6 @@
     const datos = { nombre: p.nombre, motivo };
     if (p.rut)      datos.rut      = p.rut;
     if (p.telefono) datos.telefono = p.telefono;
-    datos._codigo = p.codigo;
     await supaInsert('vetados', datos);
     await supaDelete('participantes', 'codigo', p.codigo);
     await cargarParticipantes();
