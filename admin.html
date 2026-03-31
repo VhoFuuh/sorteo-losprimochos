@@ -435,8 +435,9 @@
     if (!confirm(`¿Vetar a ${p.nombre}?\nRUT: ${p.rut || '—'} | Teléfono: ${p.telefono}\n\nSe eliminará del sorteo y no podrá registrarse de nuevo.`)) return;
     const motivo = prompt('Motivo (opcional):') || '';
     const datos = { nombre: p.nombre, motivo };
-    if (p.rut)      datos.rut      = p.rut;
-    if (p.telefono) datos.telefono = p.telefono;
+    if (p.rut)      datos.rut           = p.rut;
+    if (p.telefono) datos.telefono      = p.telefono;
+    if (p.codigo)   datos.codigo_boleta = p.codigo;
     await supaInsert('vetados', datos);
     await supaDelete('participantes', 'codigo', p.codigo);
     await cargarParticipantes();
@@ -542,7 +543,7 @@
       : parseInt(prompt(`¿A qué sorteo restaurar?\n${sorteos.map((s,i) => `${i+1}. ${s.nombre} (id:${s.id})`).join('\n')}\n\nIngresa el ID del sorteo:`));
     if (!sorteoId) return;
 
-    const codigo = v._codigo || prompt(`Ingresa el código de boleta de ${v.nombre || v.rut}:\n(Ej: BOL-20260331-0001)`);
+    const codigo = v.codigo_boleta || prompt(`Ingresa el código de boleta de ${v.nombre || v.rut}:\n(Ej: BOL-20260331-0001)`);
     if (!codigo) return;
 
     if (!confirm(`¿Restaurar a ${v.nombre || v.rut} al sorteo?`)) return;
