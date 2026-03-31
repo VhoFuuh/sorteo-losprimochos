@@ -102,21 +102,16 @@
     const SUPABASE_URL = 'https://hapdvdzxxibnbgfezhvu.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhcGR2ZHp4eGlibmJnZmV6aHZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTc5OTEsImV4cCI6MjA5MDQ5Mzk5MX0.BWWUDKTmpRNZQfK5bbRFDTCF7JJE2msvsnJs4jIgAPM';
 
-    // Prellenar código si viene en URL
     const params = new URLSearchParams(location.search);
     if (params.get('codigo')) document.getElementById('codigo').value = params.get('codigo');
 
-    // Formatear RUT chileno automáticamente
     function formatearRut(input) {
       let val = input.value.replace(/[^0-9kK]/g, '').toUpperCase();
       if (val.length > 9) val = val.slice(0, 9);
       if (val.length > 1) {
         const cuerpo = val.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        const dv = val.slice(-1);
-        input.value = `${cuerpo}-${dv}`;
-      } else {
-        input.value = val;
-      }
+        input.value = `${cuerpo}-${val.slice(-1)}`;
+      } else { input.value = val; }
     }
 
     function mostrarMsg(texto, tipo) {
@@ -146,22 +141,23 @@
       btn.disabled = true;
       btn.textContent = 'Verificando...';
 
-      // 1. Verificar si está vetado por teléfono o RUT
-      const [vetadoTel, vetadoRut] = await Promise.all([
-        supaGet('vetados', `telefono=eq.${encodeURIComponent(telefono)}`),
-        supaGet('vetados', `rut=eq.${encodeURIComponent(rut)}`)
+      // 1. Verificar si está vetado por RUT o teléfono
+      const [vetadoRut, vetadoTel] = await Promise.all([
+        supaGet('vetados', `rut=eq.${encodeURIComponent(rut)}`),
+        supaGet('vetados', `telefono=eq.${encodeURIComponent(telefono)}`)
       ]);
-      if (vetadoTel.length || vetadoRut.length) {
+      if (vetadoRut.length || vetadoTel.length) {
         mostrarMsg('No puedes participar en este sorteo.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
 
-      // 2. Verificar que el código existe
+      // 2. Verificar que el código existe y obtener sorteo_id
       const boletas = await supaGet('boletas_validas', `codigo=eq.${encodeURIComponent(codigo)}`);
       if (!boletas.length) {
         mostrarMsg('Código no válido. Verifica que está escrito correctamente.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
+      const sorteo_id = boletas[0].sorteo_id;
 
       // 3. Verificar que el código no esté ya registrado
       const dupCodigo = await supaGet('participantes', `codigo=eq.${encodeURIComponent(codigo)}`);
@@ -170,21 +166,21 @@
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
 
-      // 4. Verificar que el RUT no esté ya registrado
-      const dupRut = await supaGet('participantes', `rut=eq.${encodeURIComponent(rut)}`);
+      // 4. Verificar que el RUT no esté ya registrado en este sorteo
+      const dupRut = await supaGet('participantes', `rut=eq.${encodeURIComponent(rut)}&sorteo_id=eq.${sorteo_id}`);
       if (dupRut.length) {
         mostrarMsg('Este RUT ya está registrado en el sorteo.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
 
-      // 5. Registrar participante
+      // 5. Registrar participante con sorteo_id
       const regRes = await fetch(`${SUPABASE_URL}/rest/v1/participantes`, {
         method: 'POST',
         headers: {
           'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json', 'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ codigo, nombre, rut, telefono })
+        body: JSON.stringify({ codigo, nombre, rut, telefono, sorteo_id })
       });
 
       if (regRes.ok || regRes.status === 201) {
