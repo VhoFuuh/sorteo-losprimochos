@@ -6,7 +6,6 @@
   <title>Sorteo Los Primochos</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       min-height: 100vh;
       background: #0f0a1e;
@@ -18,17 +17,8 @@
       align-items: center;
       padding: 24px 16px;
     }
-
-    .logo-wrap {
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 20px;
-    }
-    .logo-wrap img {
-      width: 100%;
-      border-radius: 12px;
-    }
-
+    .logo-wrap { width: 100%; max-width: 420px; margin-bottom: 20px; }
+    .logo-wrap img { width: 100%; border-radius: 12px; }
     .card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
@@ -38,94 +28,37 @@
       max-width: 420px;
       backdrop-filter: blur(10px);
     }
-
     h1 {
-      font-size: 22px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 6px;
+      font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 6px;
       background: linear-gradient(90deg, #e040fb, #00bcd4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    .subtitle {
-      text-align: center;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 24px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 6px;
-    }
+    .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
     .form-group input {
-      width: 100%;
-      padding: 12px 14px;
+      width: 100%; padding: 12px 14px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px;
-      color: #e2e8f0;
-      font-size: 15px;
-      outline: none;
-      transition: border-color .2s;
+      border-radius: 10px; color: #e2e8f0; font-size: 15px; outline: none; transition: border-color .2s;
     }
-    .form-group input:focus {
-      border-color: #e040fb;
-    }
-    .form-group input::placeholder {
-      color: #475569;
-    }
-
+    .form-group input:focus { border-color: #e040fb; }
+    .form-group input::placeholder { color: #475569; }
     .btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: .2s;
-      background: linear-gradient(90deg, #e040fb, #00bcd4);
-      color: white;
-      margin-top: 4px;
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      font-size: 15px; font-weight: 600; cursor: pointer; transition: .2s;
+      background: linear-gradient(90deg, #e040fb, #00bcd4); color: white; margin-top: 4px;
     }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .msg {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-size: 14px;
-      text-align: center;
-      display: none;
-    }
-    .msg.error   { background: rgba(239,68,68,.15);  border: 1px solid rgba(239,68,68,.3);  color: #f87171; display: block; }
+    .msg { margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-size: 14px; text-align: center; display: none; }
+    .msg.error   { background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3);  color: #f87171; display: block; }
     .msg.success { background: rgba(34,197,94,.15);  border: 1px solid rgba(34,197,94,.3);  color: #4ade80; display: block; }
-
-    .footer {
-      margin-top: 24px;
-      font-size: 11px;
-      color: #475569;
-      text-align: center;
-    }
-
-    /* Estado éxito pantalla completa */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 20px 0;
-    }
+    .success-screen { display: none; text-align: center; padding: 20px 0; }
     .success-screen .icono { font-size: 64px; margin-bottom: 12px; }
     .success-screen h2 { font-size: 24px; margin-bottom: 8px; color: #4ade80; }
     .success-screen p  { color: #94a3b8; font-size: 14px; line-height: 1.6; }
+    .footer { margin-top: 24px; font-size: 11px; color: #475569; text-align: center; }
   </style>
 </head>
 <body>
@@ -135,8 +68,6 @@
   </div>
 
   <div class="card">
-
-    <!-- Formulario -->
     <div id="form-section">
       <h1>🎟️ Participa en el Sorteo</h1>
       <p class="subtitle">Ingresa tu código de boleta y tus datos para participar</p>
@@ -158,13 +89,11 @@
       <div class="msg" id="msg"></div>
     </div>
 
-    <!-- Pantalla éxito -->
     <div class="success-screen" id="success-screen">
       <div class="icono">🎉</div>
       <h2>¡Estás participando!</h2>
       <p>Tu código fue registrado.<br>Te avisaremos si eres el ganador.<br><br>¡Buena suerte!</p>
     </div>
-
   </div>
 
   <div class="footer">Los Primochos — Licores · Confites · Abarrotes<br>Patria 98, Carampangue, Arauco</div>
@@ -173,7 +102,6 @@
     const SUPABASE_URL = 'https://hapdvdzxxibnbgfezhvu.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhcGR2ZHp4eGlibmJnZmV6aHZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTc5OTEsImV4cCI6MjA5MDQ5Mzk5MX0.BWWUDKTmpRNZQfK5bbRFDTCF7JJE2msvsnJs4jIgAPM';
 
-    // Prellenar código si viene en la URL (?codigo=BOL-...)
     const params = new URLSearchParams(location.search);
     if (params.get('codigo')) {
       document.getElementById('codigo').value = params.get('codigo');
@@ -183,6 +111,13 @@
       const el = document.getElementById('msg');
       el.textContent = texto;
       el.className = 'msg ' + tipo;
+    }
+
+    async function supaGet(tabla, filtro) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?${filtro}&select=*`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      return res.json();
     }
 
     async function participar() {
@@ -198,43 +133,39 @@
       btn.disabled = true;
       btn.textContent = 'Verificando...';
 
-      // 1. Verificar que el código existe en boletas_validas
-      const checkRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/boletas_validas?codigo=eq.${encodeURIComponent(codigo)}&select=codigo`,
-        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-      );
-      const boletas = await checkRes.json();
+      // 1. Verificar si está vetado
+      const vetados = await supaGet('vetados', `telefono=eq.${encodeURIComponent(telefono)}`);
+      if (vetados.length) {
+        mostrarMsg('No puedes participar en este sorteo.', 'error');
+        btn.disabled = false; btn.textContent = 'Participar'; return;
+      }
 
+      // 2. Verificar que el código existe
+      const boletas = await supaGet('boletas_validas', `codigo=eq.${encodeURIComponent(codigo)}`);
       if (!boletas.length) {
         mostrarMsg('Código no válido. Verifica que está escrito correctamente.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
 
-      // 2. Verificar que no esté ya registrado
-      const dupRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/participantes?codigo=eq.${encodeURIComponent(codigo)}&select=codigo`,
-        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-      );
-      const dup = await dupRes.json();
-
+      // 3. Verificar que no esté ya registrado
+      const dup = await supaGet('participantes', `codigo=eq.${encodeURIComponent(codigo)}`);
       if (dup.length) {
         mostrarMsg('Este código ya fue registrado.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
 
-      // 3. Registrar participante
+      // 4. Registrar participante
       const regRes = await fetch(`${SUPABASE_URL}/rest/v1/participantes`, {
         method: 'POST',
         headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json', 'Prefer': 'return=minimal'
         },
         body: JSON.stringify({ codigo, nombre, telefono })
       });
 
       if (regRes.ok || regRes.status === 201) {
-        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('form-section').style.display  = 'none';
         document.getElementById('success-screen').style.display = 'block';
       } else {
         mostrarMsg('Error al registrar. Intenta de nuevo.', 'error');

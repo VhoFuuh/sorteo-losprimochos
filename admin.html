@@ -9,80 +9,74 @@
     :root {
       --bg: #0f0a1e; --surface: #1a1030; --surface2: #231540;
       --border: #2e1f50; --primary: #e040fb; --secondary: #00bcd4;
-      --success: #22c55e; --danger: #ef4444; --text: #e2e8f0; --muted: #94a3b8;
+      --success: #22c55e; --danger: #ef4444; --warning: #f59e0b;
+      --text: #e2e8f0; --muted: #94a3b8;
     }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
 
-    /* LOGIN */
-    #page-login {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh; padding: 24px;
-    }
-    .login-box {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 36px 28px; width: 100%; max-width: 360px;
-    }
+    #page-login { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+    .login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px 28px; width: 100%; max-width: 360px; }
     .login-box h1 { font-size: 20px; margin-bottom: 6px; }
     .login-box p  { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
 
-    /* APP */
-    #page-app { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
+    #page-app { display: none; padding: 24px; max-width: 960px; margin: 0 auto; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
     .header h1 { font-size: 20px; }
 
-    /* CARDS */
+    .tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+    .tab { padding: 8px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); transition: .2s; border: none; background: none; }
+    .tab.active { background: var(--surface2); color: var(--text); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 24px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
     .card-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
     .card-value { font-size: 26px; font-weight: 700; }
 
-    /* TABLA */
     .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
     .table-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
     .table-header h3 { font-size: 15px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { text-align: left; padding: 10px 16px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 500; }
-    td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+    td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     tr:last-child td { border: none; }
     tr:hover td { background: var(--surface2); }
 
-    /* SORTEO */
     .sorteo-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
     .sorteo-box h3 { font-size: 17px; margin-bottom: 8px; }
     .sorteo-box p  { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
-    .ganador-card {
-      background: linear-gradient(135deg, rgba(224,64,251,.15), rgba(0,188,212,.15));
-      border: 2px solid var(--primary); border-radius: 12px;
-      padding: 24px; margin: 20px 0; display: none;
-    }
+    .ganador-card { background: linear-gradient(135deg, rgba(224,64,251,.15), rgba(0,188,212,.15)); border: 2px solid var(--primary); border-radius: 12px; padding: 24px; margin: 20px 0; display: none; }
     .ganador-card .icono { font-size: 48px; margin-bottom: 8px; }
     .ganador-card h2 { font-size: 26px; color: var(--primary); }
     .ganador-card p  { color: var(--muted); margin-top: 4px; font-size: 14px; }
 
-    /* FORMS */
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; }
     .form-group input { width: 100%; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; }
     .form-group input:focus { border-color: var(--primary); }
 
-    /* BOTONES */
-    .btn { padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: .2s; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: .2s; }
     .btn-primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #fff; }
     .btn-primary:hover { opacity: .9; }
     .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .btn-ghost:hover { background: var(--border); }
-    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger { background: rgba(239,68,68,.15); color: var(--danger); border: 1px solid rgba(239,68,68,.3); }
+    .btn-danger:hover { background: rgba(239,68,68,.3); }
+    .btn-warning { background: rgba(245,158,11,.15); color: var(--warning); border: 1px solid rgba(245,158,11,.3); }
+    .btn-warning:hover { background: rgba(245,158,11,.3); }
     .btn-lg { padding: 14px 32px; font-size: 16px; }
 
     .hidden { display: none !important; }
-    .badge { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: rgba(34,197,94,.15); color: var(--success); }
+    .badge-green { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: rgba(34,197,94,.15); color: var(--success); }
+    .badge-red   { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: rgba(239,68,68,.15); color: var(--danger); }
 
-    /* Animación del sorteo */
-    @keyframes ruleta {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+    .vetado-form { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .vetado-form h3 { font-size: 15px; margin-bottom: 16px; }
+    .inline-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+    .inline-form .form-group { margin: 0; flex: 1; min-width: 160px; }
+
+    @keyframes ruleta { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     .sorteando { animation: ruleta .3s ease infinite; }
   </style>
 </head>
@@ -109,59 +103,79 @@
     <button class="btn btn-ghost" onclick="doLogout()">Cerrar sesión</button>
   </div>
 
-  <!-- Cards resumen -->
-  <div class="cards">
-    <div class="card">
-      <div class="card-label">Boletas válidas</div>
-      <div class="card-value" id="total-boletas">—</div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('tab-participantes', this)">👥 Participantes</button>
+    <button class="tab" onclick="showTab('tab-sorteo', this)">🎰 Sorteo</button>
+    <button class="tab" onclick="showTab('tab-vetados', this)">🚫 Vetados</button>
+  </div>
+
+  <!-- TAB PARTICIPANTES -->
+  <div id="tab-participantes" class="tab-content active">
+    <div class="cards">
+      <div class="card"><div class="card-label">Boletas válidas</div><div class="card-value" id="total-boletas">—</div></div>
+      <div class="card"><div class="card-label">Participantes</div><div class="card-value" id="total-participantes">—</div></div>
+      <div class="card"><div class="card-label">Sin registrar</div><div class="card-value" id="total-sinregistrar">—</div></div>
     </div>
-    <div class="card">
-      <div class="card-label">Participantes</div>
-      <div class="card-value" id="total-participantes">—</div>
-    </div>
-    <div class="card">
-      <div class="card-label">Sin registrar</div>
-      <div class="card-value" id="total-sinregistrar">—</div>
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>👥 Participantes registrados</h3>
+        <button class="btn btn-ghost" onclick="cargarDatos()">🔄 Actualizar</button>
+      </div>
+      <table>
+        <thead><tr><th>#</th><th>Código</th><th>Nombre</th><th>Teléfono</th><th>Registrado</th><th>Acciones</th></tr></thead>
+        <tbody id="tabla-participantes">
+          <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Tabla participantes -->
-  <div class="table-wrap">
-    <div class="table-header">
-      <h3>👥 Participantes registrados</h3>
-      <button class="btn btn-ghost" onclick="cargarDatos()">🔄 Actualizar</button>
+  <!-- TAB SORTEO -->
+  <div id="tab-sorteo" class="tab-content">
+    <div class="sorteo-box">
+      <h3>🎰 Realizar Sorteo</h3>
+      <p>Se elegirá un ganador al azar entre todos los participantes registrados.</p>
+      <div class="ganador-card" id="ganador-card">
+        <div class="icono">🏆</div>
+        <h2 id="ganador-nombre">—</h2>
+        <p id="ganador-codigo">—</p>
+        <p id="ganador-telefono" style="margin-top:6px;font-size:15px;color:var(--text);">—</p>
+      </div>
+      <button class="btn btn-primary btn-lg" id="btn-sortear" onclick="realizarSorteo()">🎲 Sortear ganador</button>
+      <div style="margin-top:10px;">
+        <button class="btn btn-ghost" id="btn-nuevo-sorteo" onclick="nuevoSorteo()" style="display:none;">↩ Nuevo sorteo</button>
+      </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Código boleta</th>
-          <th>Nombre</th>
-          <th>Teléfono</th>
-          <th>Registrado</th>
-        </tr>
-      </thead>
-      <tbody id="tabla-participantes">
-        <tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
-      </tbody>
-    </table>
   </div>
 
-  <!-- Sorteo -->
-  <div class="sorteo-box">
-    <h3>🎰 Realizar Sorteo</h3>
-    <p>Se elegirá un ganador al azar entre todos los participantes registrados.</p>
-
-    <div class="ganador-card" id="ganador-card">
-      <div class="icono">🏆</div>
-      <h2 id="ganador-nombre">—</h2>
-      <p id="ganador-codigo">—</p>
-      <p id="ganador-telefono" style="margin-top:6px;font-size:15px;color:var(--text);">—</p>
+  <!-- TAB VETADOS -->
+  <div id="tab-vetados" class="tab-content">
+    <div class="vetado-form">
+      <h3>🚫 Agregar persona vetada</h3>
+      <div class="inline-form">
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="text" id="veto-telefono" placeholder="+56912345678" />
+        </div>
+        <div class="form-group">
+          <label>Motivo (opcional)</label>
+          <input type="text" id="veto-motivo" placeholder="Ej: empleado, familiar..." />
+        </div>
+        <button class="btn btn-warning" onclick="agregarVetado()">+ Vetar</button>
+      </div>
+      <div id="veto-msg" style="margin-top:10px;font-size:13px;"></div>
     </div>
-
-    <button class="btn btn-primary btn-lg" id="btn-sortear" onclick="realizarSorteo()">🎲 Sortear ganador</button>
-    <div style="margin-top:10px;">
-      <button class="btn btn-ghost" id="btn-nuevo-sorteo" onclick="nuevoSorteo()" style="display:none;">↩ Nuevo sorteo</button>
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>🚫 Lista de vetados</h3>
+        <button class="btn btn-ghost" onclick="cargarVetados()">🔄 Actualizar</button>
+      </div>
+      <table>
+        <thead><tr><th>Teléfono</th><th>Motivo</th><th>Agregado</th><th>Acción</th></tr></thead>
+        <tbody id="tabla-vetados">
+          <tr><td colspan="4" style="text-align:center;padding:30px;color:var(--muted);">Cargando...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -169,7 +183,7 @@
 <script>
   const SUPABASE_URL = 'https://hapdvdzxxibnbgfezhvu.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhcGR2ZHp4eGlibmJnZmV6aHZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTc5OTEsImV4cCI6MjA5MDQ5Mzk5MX0.BWWUDKTmpRNZQfK5bbRFDTCF7JJE2msvsnJs4jIgAPM';
-  const ADMIN_PASSWORD = 'primochos2026'; // Cámbiala
+  const ADMIN_PASSWORD = 'primochos2026';
 
   function doLogin() {
     const pass = document.getElementById('login-pass').value;
@@ -181,12 +195,20 @@
     document.getElementById('page-login').style.display = 'none';
     document.getElementById('page-app').style.display = 'block';
     cargarDatos();
+    cargarVetados();
   }
 
   function doLogout() {
     document.getElementById('page-login').style.display = 'flex';
     document.getElementById('page-app').style.display = 'none';
     document.getElementById('login-pass').value = '';
+  }
+
+  function showTab(id, el) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
   }
 
   async function supaFetch(tabla, params = '') {
@@ -196,59 +218,83 @@
     return res.json();
   }
 
+  async function supaDelete(tabla, campo, valor) {
+    return fetch(`${SUPABASE_URL}/rest/v1/${tabla}?${campo}=eq.${encodeURIComponent(valor)}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=minimal' }
+    });
+  }
+
+  async function supaInsert(tabla, datos) {
+    return fetch(`${SUPABASE_URL}/rest/v1/${tabla}`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify(datos)
+    });
+  }
+
   async function cargarDatos() {
     const [boletas, participantes] = await Promise.all([
       supaFetch('boletas_validas', 'select=codigo'),
       supaFetch('participantes', 'select=*&order=creado_en.desc'),
     ]);
-
-    document.getElementById('total-boletas').textContent      = boletas.length;
+    document.getElementById('total-boletas').textContent       = boletas.length;
     document.getElementById('total-participantes').textContent = participantes.length;
     document.getElementById('total-sinregistrar').textContent  = boletas.length - participantes.length;
 
     const tbody = document.getElementById('tabla-participantes');
     if (!participantes.length) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);">Sin participantes aún</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);">Sin participantes aún</td></tr>';
       return;
     }
     tbody.innerHTML = participantes.map((p, i) => `
       <tr>
         <td style="color:var(--muted)">${i + 1}</td>
-        <td><span class="badge">${p.codigo}</span></td>
+        <td><span class="badge-green">${p.codigo}</span></td>
         <td style="font-weight:600">${p.nombre}</td>
         <td>${p.telefono}</td>
-        <td style="color:var(--muted);font-size:12px">${new Date(p.creado_en).toLocaleString('es-CL', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
+        <td style="color:var(--muted);font-size:12px">${new Date(p.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-danger" style="padding:4px 10px;font-size:12px;" onclick="eliminarParticipante('${p.codigo}','${p.nombre}')">🗑 Eliminar</button>
+          <button class="btn btn-warning" style="padding:4px 10px;font-size:12px;" onclick="vetarDesdeParticipante('${p.telefono}','${p.nombre}')">🚫 Vetar</button>
+        </td>
       </tr>
     `).join('');
   }
 
-  let participantesCache = [];
+  async function eliminarParticipante(codigo, nombre) {
+    if (!confirm(`¿Eliminar a ${nombre} del sorteo?`)) return;
+    await supaDelete('participantes', 'codigo', codigo);
+    await cargarDatos();
+  }
+
+  async function vetarDesdeParticipante(telefono, nombre) {
+    if (!confirm(`¿Vetar a ${nombre} (${telefono})?\nSe eliminará del sorteo y no podrá registrarse de nuevo.`)) return;
+    const motivo = prompt('Motivo (opcional):') || '';
+    await supaInsert('vetados', { telefono, motivo });
+    await supaDelete('participantes', 'telefono', telefono);
+    await cargarDatos();
+    await cargarVetados();
+  }
 
   async function realizarSorteo() {
     const btn = document.getElementById('btn-sortear');
     btn.disabled = true;
-
     const participantes = await supaFetch('participantes', 'select=*');
     if (!participantes.length) {
       alert('No hay participantes registrados aún.');
       btn.disabled = false; return;
     }
-
-    participantesCache = participantes;
-
-    // Animación ruleta
     const card = document.getElementById('ganador-card');
     card.style.display = 'block';
     card.classList.add('sorteando');
     btn.textContent = '🎲 Sorteando...';
 
-    let i = 0;
     const intervalo = setInterval(() => {
       const temp = participantes[Math.floor(Math.random() * participantes.length)];
       document.getElementById('ganador-nombre').textContent   = temp.nombre;
       document.getElementById('ganador-codigo').textContent   = temp.codigo;
       document.getElementById('ganador-telefono').textContent = temp.telefono;
-      i++;
     }, 100);
 
     setTimeout(() => {
@@ -264,11 +310,53 @@
   }
 
   function nuevoSorteo() {
-    document.getElementById('ganador-card').style.display = 'none';
-    document.getElementById('btn-sortear').style.display  = 'inline-block';
-    document.getElementById('btn-sortear').disabled       = false;
-    document.getElementById('btn-sortear').textContent    = '🎲 Sortear ganador';
+    document.getElementById('ganador-card').style.display     = 'none';
+    document.getElementById('btn-sortear').style.display      = 'inline-block';
+    document.getElementById('btn-sortear').disabled           = false;
+    document.getElementById('btn-sortear').textContent        = '🎲 Sortear ganador';
     document.getElementById('btn-nuevo-sorteo').style.display = 'none';
+  }
+
+  async function cargarVetados() {
+    const vetados = await supaFetch('vetados', 'select=*&order=creado_en.desc');
+    const tbody = document.getElementById('tabla-vetados');
+    if (!vetados.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--muted);">Sin vetados</td></tr>';
+      return;
+    }
+    tbody.innerHTML = vetados.map(v => `
+      <tr>
+        <td><span class="badge-red">${v.telefono}</span></td>
+        <td style="color:var(--muted)">${v.motivo || '—'}</td>
+        <td style="color:var(--muted);font-size:12px">${new Date(v.creado_en).toLocaleString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td>
+        <td><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="eliminarVetado(${v.id},'${v.telefono}')">✕ Quitar veto</button></td>
+      </tr>
+    `).join('');
+  }
+
+  async function agregarVetado() {
+    const telefono = document.getElementById('veto-telefono').value.trim();
+    const motivo   = document.getElementById('veto-motivo').value.trim();
+    const msg      = document.getElementById('veto-msg');
+    if (!telefono) { msg.style.color = 'var(--danger)'; msg.textContent = 'El teléfono es obligatorio'; return; }
+    const res = await supaInsert('vetados', { telefono, motivo });
+    if (res.ok || res.status === 201) {
+      msg.style.color = 'var(--success)';
+      msg.textContent = `✓ ${telefono} vetado correctamente`;
+      document.getElementById('veto-telefono').value = '';
+      document.getElementById('veto-motivo').value   = '';
+      await cargarVetados();
+    } else {
+      msg.style.color = 'var(--danger)';
+      msg.textContent = 'Error al vetar (puede que ya exista)';
+    }
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  }
+
+  async function eliminarVetado(id, telefono) {
+    if (!confirm(`¿Quitar el veto de ${telefono}?`)) return;
+    await supaDelete('vetados', 'id', id);
+    await cargarVetados();
   }
 </script>
 </body>
