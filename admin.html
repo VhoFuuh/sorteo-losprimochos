@@ -250,6 +250,12 @@
   const SUPABASE_URL = 'https://hapdvdzxxibnbgfezhvu.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhcGR2ZHp4eGlibmJnZmV6aHZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTc5OTEsImV4cCI6MjA5MDQ5Mzk5MX0.BWWUDKTmpRNZQfK5bbRFDTCF7JJE2msvsnJs4jIgAPM';
 
+  // Variables globales de estado
+  let sorteosCache         = [];
+  let vetadosCache         = [];
+  let participantesActivos = [];
+  let sorteoActualId       = null;
+
   // Hash SHA-256 de la contraseña admin — no se guarda el texto plano
   // Para cambiar la contraseña, genera un nuevo hash en: https://emn178.github.io/online-tools/sha256.html
   // y reemplaza este valor
