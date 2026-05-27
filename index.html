@@ -27,7 +27,7 @@
     h1 {
       font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 6px;
       background: linear-gradient(90deg, #e040fb, #00bcd4);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
     .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 24px; }
     .form-group { margin-bottom: 16px; }
@@ -120,6 +120,26 @@
       el.className = 'msg ' + tipo;
     }
 
+    // Fix 4: Validación real del dígito verificador del RUT chileno
+    function validarRut(rut) {
+      const limpio = rut.replace(/\./g, '').replace('-', '').toUpperCase();
+      if (limpio.length < 3) return false;
+      const cuerpo = limpio.slice(0, -1);
+      const dv     = limpio.slice(-1);
+      if (!/^\d+$/.test(cuerpo)) return false;
+      let suma = 0, multiplo = 2;
+      for (let i = cuerpo.length - 1; i >= 0; i--) {
+        suma += parseInt(cuerpo[i]) * multiplo;
+        multiplo = multiplo < 7 ? multiplo + 1 : 2;
+      }
+      const dvEsperado = 11 - (suma % 11);
+      const dvCalc = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : String(dvEsperado);
+      return dv === dvCalc;
+    }
+
+    // Fix 5: Rate limiting — máximo 1 intento cada 30 segundos por sesión
+    let ultimoIntento = 0;
+
     async function supaGet(tabla, filtro) {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?${filtro}&select=*`, {
         headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
@@ -138,6 +158,19 @@
         mostrarMsg('Completa todos los campos', 'error'); return;
       }
 
+      // Fix 5: bloquear si hace menos de 30 segundos del último intento fallido
+      const ahora = Date.now();
+      if (ahora - ultimoIntento < 30000) {
+        const restantes = Math.ceil((30000 - (ahora - ultimoIntento)) / 1000);
+        mostrarMsg(`Espera ${restantes} segundos antes de intentar de nuevo.`, 'error');
+        return;
+      }
+
+      // Fix 4: validar dígito verificador del RUT antes de consultar Supabase
+      if (!validarRut(rut)) {
+        mostrarMsg('El RUT ingresado no es válido.', 'error'); return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Verificando...';
 
@@ -154,6 +187,7 @@
       // 2. Verificar que el código existe y obtener sorteo_id
       const boletas = await supaGet('boletas_validas', `codigo=eq.${encodeURIComponent(codigo)}`);
       if (!boletas.length) {
+        ultimoIntento = Date.now(); // activar rate limit en intentos fallidos
         mostrarMsg('Código no válido. Verifica que está escrito correctamente.', 'error');
         btn.disabled = false; btn.textContent = 'Participar'; return;
       }
